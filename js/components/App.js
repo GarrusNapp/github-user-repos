@@ -1,10 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Form } from "./Form";
+import { Menu } from "./Menu";
 
 class App extends React.Component {
   render() {
     return (
-      <main>Main component</main>
+      <div className="container">
+        <main>
+          <Menu />
+          <Form />
+        </main>
+      </div>
     );
   }
 }
