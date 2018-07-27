@@ -3,15 +3,16 @@ import {
   FormGroup,
   FormControl,
   ControlLabel,
-  HelpBlock
+  HelpBlock,
+  Button
 } from "react-bootstrap";
 
 export class Form extends React.Component {
   state = { value: "" };
 
   getValidationState() {
-    console.log('val')
     const { value } = this.state;
+    if (value.length == 0) return null;
     let result;
     const usernameRegex = new RegExp("[^0-9A-Za-z-]|^-|-$|--");
     value.split(" ").forEach(el => {
@@ -25,9 +26,13 @@ export class Form extends React.Component {
     this.setState({ value: e.target.value });
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+  };
+
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <FormGroup
           controlId="formBasicText"
           validationState={this.getValidationState()}
@@ -45,6 +50,7 @@ export class Form extends React.Component {
             and cannot begin or end with a hyphen{" "}
           </HelpBlock>
         </FormGroup>
+        <Button type="submit">Submit</Button>
       </form>
     );
   }
