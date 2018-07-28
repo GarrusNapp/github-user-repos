@@ -6,24 +6,35 @@ import {
   HelpBlock,
   Button
 } from "react-bootstrap";
+import { connect } from "react-redux";
+import { fetchUser } from "../redux/actions";
 
-export class Form extends React.Component {
-  state = { value: "" };
+class Form extends React.Component {
+  state = { value: "", valid: null };
 
-  getValidationState() {
-    const { value } = this.state;
-    if (value.length == 0) return null;
+  getValidationState(str, callback) {
     let result;
-    const usernameRegex = new RegExp("[^0-9A-Za-z-]|^-|-$|--");
-    value.split(" ").forEach(el => {
-      if (usernameRegex.test(el)) result = "error";
-      else result = "success";
-    });
-    return result;
+    const usernameRegex = new RegExp("[^0-9A-Za-z-\\s]|^-|-$|--");
+    if (usernameRegex.test(str)) result = "error";
+    else if (str.length == 0) result = null;
+    else result = "success";
+    this.setState(
+      {
+        valid: result
+      },
+      callback(result)
+    );
   }
 
   handleChange = e => {
-    this.setState({ value: e.target.value });
+    console.log(e.target.value);
+    let { value } = e.target;
+    this.setState(
+      { value },
+      this.getValidationState(value, result => {
+        if (result != "error") this.props.addTabs(value.split(" "));
+      })
+    );
   };
 
   handleSubmit = e => {
@@ -33,10 +44,7 @@ export class Form extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <FormGroup
-          controlId="formBasicText"
-          validationState={this.getValidationState()}
-        >
+        <FormGroup controlId="formBasicText" validationState={this.state.valid}>
           <ControlLabel>Provide usernames separated by space:</ControlLabel>
           <FormControl
             type="text"
@@ -55,3 +63,5 @@ export class Form extends React.Component {
     );
   }
 }
+
+export default connect(null, { fetchUser })(Form);
