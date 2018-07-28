@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/GarrusNapp/github-user-repos#readme",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.1",
