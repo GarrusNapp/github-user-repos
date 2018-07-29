@@ -2,22 +2,23 @@ export const FETCH_REPOS = "FETCH_REPOS";
 export const RECEIVE_REPOS = "RECEIVE_REPOS";
 export const FETCH_USER = "FETCH_USER";
 export const RECEIVE_USER = "RECEIVE_USER";
+export const RECEIVE_USER_ERROR = "RECEIVE_USER_ERROR";
 
 export const fetchUser = username => dispatch => {
-  dispatch({ type: FETCH_USER });
+  console.log("fetching user");
+  dispatch({ type: FETCH_USER, username });
   fetch(`https://api.github.com/users/${username}`)
     .then(r => r.json())
     .then(data => {
       let payload;
-
       if (!data.message) {
         let { login, avatar_url, name, location, bio } = data;
         payload = { login, avatar_url, name, location, bio };
+        dispatch({ type: RECEIVE_USER, payload });
       } else {
         payload = { error: data.message };
+        dispatch({ type: RECEIVE_USER_ERROR, username, payload });
       }
-
-      dispatch({ type: RECEIVE_USER, payload });
     });
 };
 

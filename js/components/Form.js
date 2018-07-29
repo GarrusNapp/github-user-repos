@@ -6,8 +6,6 @@ import {
   HelpBlock,
   Button
 } from "react-bootstrap";
-import { connect } from "react-redux";
-import { fetchUser } from "../redux/actions";
 
 class Form extends React.Component {
   state = { value: "", valid: null };
@@ -27,7 +25,6 @@ class Form extends React.Component {
   }
 
   handleChange = e => {
-    console.log(e.target.value);
     let { value } = e.target;
     this.setState(
       { value },
@@ -39,6 +36,10 @@ class Form extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    if (this.state.value) {
+      this.props.enableTabs();
+      this.props.handleSelect(1);
+    }
   };
 
   render() {
@@ -64,4 +65,4 @@ class Form extends React.Component {
   }
 }
 
-export default connect(null, { fetchUser })(Form);
+export default Form;

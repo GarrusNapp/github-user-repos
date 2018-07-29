@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import Form from "./Form";
+import UserInfo from "./UserInfo";
 
 export class Menu extends React.Component {
   constructor(props) {
@@ -14,7 +15,6 @@ export class Menu extends React.Component {
   }
 
   getTabs = tabs => {
-    console.log(typeof tabs, tabs);
     this.setState({
       tabs
     });
@@ -24,12 +24,21 @@ export class Menu extends React.Component {
     this.setState({ key });
   };
 
+  enableTabs = () => {
+    this.setState({ tabsDisabled: false });
+  };
+
   render() {
     let tabs = this.state.tabs.map((el, i) => {
       if (el.length > 0) {
         return (
-          <Tab eventKey={i + 1} title={el} disabled={this.state.tabsDisabled}>
-            {el}
+          <Tab
+            eventKey={i + 1}
+            title={el}
+            disabled={this.state.tabsDisabled}
+            key={el + i}
+          >
+            <UserInfo name={el} open={this.state.key == i + 1} />
           </Tab>
         );
       }
@@ -40,8 +49,12 @@ export class Menu extends React.Component {
         onSelect={this.handleSelect}
         id="controlled-tab-example"
       >
-        <Tab eventKey={0} title="Form">
-          <Form addTabs={this.getTabs} />
+        <Tab eventKey={0} title="Form" key={"Form0"}>
+          <Form
+            addTabs={this.getTabs}
+            handleSelect={this.handleSelect}
+            enableTabs={this.enableTabs}
+          />
         </Tab>
         {tabs}
       </Tabs>
