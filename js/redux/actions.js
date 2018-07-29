@@ -1,5 +1,6 @@
 export const FETCH_REPOS = "FETCH_REPOS";
 export const RECEIVE_REPOS = "RECEIVE_REPOS";
+export const RECEIVE_REPOS_ERROR = "RECEIVE_REPOS_ERROR";
 export const FETCH_USER = "FETCH_USER";
 export const RECEIVE_USER = "RECEIVE_USER";
 export const RECEIVE_USER_ERROR = "RECEIVE_USER_ERROR";
@@ -19,12 +20,13 @@ export const fetchUser = username => dispatch => {
         payload = { error: data.message };
         dispatch({ type: RECEIVE_USER_ERROR, username, payload });
       }
-    });
+    })
+    .then(dispatch(fetchRepos(username)));
 };
 
 export const fetchRepos = username => dispatch => {
   ///check
-  dispatch({ type: FETCH_REPOS });
+  dispatch({ type: FETCH_REPOS, username });
   fetch(`https://api.github.com/users/${username}/repos`)
     .then(r => r.json())
     .then(data => {
@@ -35,8 +37,9 @@ export const fetchRepos = username => dispatch => {
           return { name, description, fork, language };
         });
       } else {
-        payload = { error: "No repositories available" };
+        payload = [{ error: "No repositories available" }];
+        dispatch({ type: RECEIVE_REPOS_ERROR, username, payload });
       }
-      dispatch({ type: RECEIVE_REPOS, payload });
+      dispatch({ type: RECEIVE_REPOS, username, payload });
     });
 };

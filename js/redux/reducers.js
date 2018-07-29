@@ -14,23 +14,47 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USER:
       return {
-        users: Object.assign({}, state.users, {
+        users: {
+          ...state.users,
           [action.username]: { fetching: true }
-        })
+        }
       };
     case RECEIVE_USER:
       return {
-        users: Object.assign({}, state.users, {
-          [action.payload.login.toLowerCase()]: Object.assign({}, action.payload, {
+        users: {
+          ...state.users,
+          [action.payload.login.toLowerCase()]: {
+            ...action.payload,
             fetching: false
-          })
-        })
+          }
+        }
       };
-      case RECEIVE_USER_ERROR:
+    case RECEIVE_USER_ERROR:
       return {
-        users: Object.assign({}, state.users, {
+        users: {
+          ...state.users,
           [action.username]: { fetching: false, error: action.payload.error }
-        })
+        }
+      };
+    case FETCH_REPOS:
+      return {
+        users: {
+          ...state.users,
+          [action.username]: {
+            ...state.users[action.username],
+            repos: []
+          }
+        }
+      };
+    case RECEIVE_REPOS:
+      return {
+        users: {
+          ...state.users,
+          [action.username]: {
+            ...state.users[action.username],
+            repos: action.payload
+          }
+        }
       };
     default:
       return state;
