@@ -1,6 +1,7 @@
 import {
   FETCH_REPOS,
   RECEIVE_REPOS,
+  RECEIVE_REPOS_ERROR,
   FETCH_USER,
   RECEIVE_USER,
   RECEIVE_USER_ERROR
@@ -47,6 +48,8 @@ const reducer = (state = initialState, action) => {
         }
       };
     case RECEIVE_REPOS:
+    case RECEIVE_REPOS_ERROR:
+    //console.log("editing repos")
       return {
         users: {
           ...state.users,

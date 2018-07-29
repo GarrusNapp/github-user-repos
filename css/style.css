@@ -1,0 +1,23 @@
+.user-display {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-display img {
+  width: 250px;
+  align-self: flex-start;
+}
+
+.repos {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.repo {
+  border: 1px solid #36789a;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+}
