@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchUser } from "../redux/actions";
+import { fetchUser } from "../redux/actions/userActions";
 import { ProgressBar, Well } from "react-bootstrap";
-import { RepoDisplay } from "./RepoDisplay";
 import { UserDisplay } from "./UserDisplay";
 
 class UserInfo extends React.Component {

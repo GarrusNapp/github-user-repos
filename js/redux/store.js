@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import reducer from "./reducers";
+import userReducer from "./reducers/userReducer";
 
 const initialState = {users: {}};
 const middleware = [thunk];
@@ -12,7 +12,7 @@ const enhancer = composeEnhancers(
 );
 
 const store = createStore(
-  reducer,
+  userReducer,
   initialState,
   enhancer
 );

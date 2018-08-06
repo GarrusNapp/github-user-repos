@@ -1,0 +1,6 @@
+export const FETCH_REPOS = "FETCH_REPOS";
+export const RECEIVE_REPOS = "RECEIVE_REPOS";
+export const RECEIVE_REPOS_ERROR = "RECEIVE_REPOS_ERROR";
+export const FETCH_USER = "FETCH_USER";
+export const RECEIVE_USER = "RECEIVE_USER";
+export const RECEIVE_USER_ERROR = "RECEIVE_USER_ERROR";

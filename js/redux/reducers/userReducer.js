@@ -5,13 +5,13 @@ import {
   FETCH_USER,
   RECEIVE_USER,
   RECEIVE_USER_ERROR
-} from "./actions";
+} from "../actions/types";
 
 const initialState = {
   users: {}
 };
 
-const reducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USER:
       return {
@@ -49,7 +49,7 @@ const reducer = (state = initialState, action) => {
       };
     case RECEIVE_REPOS:
     case RECEIVE_REPOS_ERROR:
-    //console.log("editing repos")
+      //console.log("editing repos")
       return {
         users: {
           ...state.users,
@@ -64,4 +64,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default userReducer;

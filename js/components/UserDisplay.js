@@ -1,5 +1,6 @@
 import React from "react";
 import { Well, ProgressBar } from "react-bootstrap";
+import { RepoDisplay } from "./RepoDisplay";
 
 export const UserDisplay = props => {
   return (
