@@ -12,7 +12,7 @@ class Form extends React.Component {
 
   getValidationState(str, callback) {
     let result;
-    const usernameRegex = new RegExp("[^0-9A-Za-z-\\s]|^-|-$|--");
+    const usernameRegex = new RegExp("[^0-9A-Za-z-\\s]|^-|-$|--|^\\s|[\\s]{2,}");
     if (usernameRegex.test(str)) result = "error";
     else if (str.length == 0) result = null;
     else result = "success";
@@ -59,7 +59,7 @@ class Form extends React.Component {
             and cannot begin or end with a hyphen{" "}
           </HelpBlock>
         </FormGroup>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={this.state.valid === "error"}>Submit</Button>
       </form>
     );
   }
