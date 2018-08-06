@@ -4,15 +4,11 @@ import Form from "./Form";
 import UserInfo from "./UserInfo";
 
 export class Menu extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      key: 0,
-      tabs: [],
-      tabsDisabled: true
-    };
-  }
+  state = {
+    key: 0,
+    tabs: [],
+    tabsDisabled: true
+  };
 
   getTabs = tabs => {
     this.setState({
