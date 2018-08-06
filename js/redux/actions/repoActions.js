@@ -4,7 +4,12 @@ export const fetchRepos = username => dispatch => {
   //console.log("fetching repos");
   dispatch({ type: FETCH_REPOS, username });
   fetch(`https://api.github.com/users/${username}/repos`)
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) {
+        throw new Error(r.statusText);
+      }
+      return r.json();
+    })
     .then(data => {
       let payload;
       if (data.length > 0) {
@@ -13,9 +18,15 @@ export const fetchRepos = username => dispatch => {
           return { name, description, fork, language, html_url, id };
         });
       } else {
-        payload = [{ error: "No repositories available" }];
-        dispatch({ type: RECEIVE_REPOS_ERROR, username, payload });
+        throw new Error("No repositories available");
       }
       dispatch({ type: RECEIVE_REPOS, username, payload });
-    });
+    })
+    .catch(error =>
+      dispatch({
+        type: RECEIVE_REPOS_ERROR,
+        username,
+        payload: [{ error: error.toString() }]
+      })
+    );
 };

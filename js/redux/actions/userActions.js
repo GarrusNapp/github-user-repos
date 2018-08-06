@@ -5,7 +5,12 @@ export const fetchUser = username => dispatch => {
   //console.log("fetching user");
   dispatch({ type: FETCH_USER, username });
   fetch(`https://api.github.com/users/${username}`)
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) {
+        throw new Error(r.statusText);
+      }
+      return r.json();
+    })
     .then(data => {
       let payload;
       if (!data.message) {
@@ -13,11 +18,17 @@ export const fetchUser = username => dispatch => {
         payload = { login, avatar_url, name, location, bio };
         dispatch({ type: RECEIVE_USER, payload });
       } else {
-        payload = { error: data.message };
-        dispatch({ type: RECEIVE_USER_ERROR, username, payload });
+        throw new Error(data.message);
       }
     })
     .then(() => {
       dispatch(fetchRepos(username));
-    });
+    })
+    .catch(error =>
+      dispatch({
+        type: RECEIVE_USER_ERROR,
+        username,
+        payload: { error: error.toString() }
+      })
+    );
 };
